@@ -20,6 +20,7 @@ body {
 
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -80,6 +81,20 @@ header button:hover {
 
 .login {
     margin-left: auto;
+}
+
+.login-error {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    background: #e94818b4;
+    border-radius: 10px;
+    border: 1px solid #e94918;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-size: 16;
+    font-weight: 700;
 }
 
 .form-box {

@@ -25,8 +25,18 @@
         <img src="public/images/image.jpg" alt="" class="logo">
         <nav>
             <ul class="nav-links" >
-                <li><a href="#">Home</a></li>
+                <li><a href="?c=home">Home</a></li>
             </ul>
         </nav>
+        <?php
+        if( isset( $_SESSION[ 'username' ] ) ) {
+        ?>
+        <a class="login" href="?c=login&a=logOut"><Button>Log Out</Button></a>
+        <?php
+        } else {
+        ?>
         <a class="login" href="?c=login"><Button>Log In</Button></a>
+        <?php
+        }
+        ?>
     </header>

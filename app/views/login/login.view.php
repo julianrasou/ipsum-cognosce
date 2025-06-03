@@ -1,5 +1,10 @@
 <main>
     <div class="container">
+        <?php
+        if( $error !== '' ) {
+            echo '<div class="login-error">' . $error . '</div>';
+        }
+        ?>
         <div class="form-box active" id="login-form">
             <form action="?c=login&a=loginUser" method="post">
                 <h2>Iniciar sesión</h2>
