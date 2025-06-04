@@ -1,13 +1,14 @@
 <main>
-    <div class="container">
-        <?php
-        if( $error !== '' ) {
-            echo '<div class="login-error">' . $error . '</div>';
-        }
-        ?>
+    <div class="flex-container">
+        
         <div class="form-box active" id="login-form">
             <form action="?c=login&a=loginUser" method="post">
                 <h2>Iniciar sesión</h2>
+                <?php
+                if( $error !== '' ) {
+                    echo '<div class="login-error">' . $error . '</div>';
+                }
+                ?>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit" name="login">Login</button>
@@ -18,6 +19,11 @@
         <div class="form-box" id="register-form">
             <form action="?c=login&a=saveUser" method="post">
                 <h2>Registrarse</h2>
+                <?php
+                if( $error !== '' ) {
+                    echo '<div class="login-error">' . $error . '</div>';
+                }
+                ?>
                 <input type="text" name="name" placeholder="Nombre" required>
                 <input type="text" name="username" placeholder="Nombre de usuario" required>
                 <input type="email" name="email" placeholder="Email" required>

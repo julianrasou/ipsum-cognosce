@@ -1,0 +1,42 @@
+.page-header {
+    width: 70%;
+    min-width: 900px;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 10%;
+    box-shadow: 0px 5px 5px #33333320;
+}
+.header-logo {
+    width: 50px;
+    cursor: pointer;
+}
+.nav-links {
+    list-style: none;
+    margin-left: 40px;
+}
+.nav-links li {
+    display: inline-block;
+    padding-left: 20px;
+}
+.nav-links a {
+    transition: all 0.3s ease 0s;
+}
+.nav-links a:hover {
+    color: #FFBD73;
+}
+.page-header button {
+    padding: 5px 25px;
+    background-color: #FFBD73;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.page-header button:hover {
+    background-color: #dba362;
+}
+.login-button {
+    margin-left: auto;
+}

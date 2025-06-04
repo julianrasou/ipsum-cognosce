@@ -22,7 +22,7 @@
 <body>
 
     <header class="page-header" >
-        <img src="public/images/image.jpg" alt="" class="logo">
+        <img src="public/images/image.jpg" alt="" class="header-logo">
         <nav>
             <ul class="nav-links" >
                 <li><a href="?c=home">Home</a></li>
@@ -31,11 +31,11 @@
         <?php
         if( isset( $_SESSION[ 'username' ] ) ) {
         ?>
-        <a class="login" href="?c=login&a=logOut"><Button>Log Out</Button></a>
+        <a class="login-button" href="?c=login&a=logOut"><Button>Log Out</Button></a>
         <?php
         } else {
         ?>
-        <a class="login" href="?c=login"><Button>Log In</Button></a>
+        <a class="login-button" href="?c=login"><Button>Log In</Button></a>
         <?php
         }
         ?>
