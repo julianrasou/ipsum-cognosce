@@ -1,0 +1,10 @@
+Página de notas:
+Barra lateral con categorías: 
+- Todas las tareas
+- Sin categoría
+- Trabajo
+- Estudios
+- Hogar
+- Personal
+
+En cada categoría se muestran las tareas de su categoría

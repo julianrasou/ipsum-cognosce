@@ -60,6 +60,7 @@ class Login {
             if( password_verify( $password, $user[ 'password' ] ) ) {
                 $_SESSION[ 'username' ] = $user[ 'username' ];
                 $_SESSION[ 'email' ] = $user[ 'email' ];
+                $_SESSION[ 'user-id' ] = $user[ 'id' ];
 
                 header( 'Location: ?c=home' ); 
                 exit();
