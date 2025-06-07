@@ -5,6 +5,7 @@
     align-items: center;
     width: 100%;
 }
+
 .form-box {
     margin-top: 20px;
     width: 100%;
@@ -15,14 +16,17 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: none;
 }
+
 .form-box.active {
     display: block;
 }
+
 .flex-container h2 {
     font-size: 34px;
     text-align: center;
     margin-bottom: 20px;
 }
+
 .flex-container input {
     width: 100%;
     padding: 12px;
@@ -33,6 +37,7 @@
     font-size: 18px;
     margin-bottom: 20px;
 }
+
 .flex-container button {
     width: 100%;
     padding: 12px;
@@ -46,21 +51,26 @@
     margin-bottom: 20px;
     transition: 0.5s;
 }
+
 .flex-container button:hover {
     background: #dba362;
 }
+
 .flex-container p {
     font-size: 16px;
     text-align: center;
     margin-bottom: 10px;
 }
+
 .flex-container p a {
     color: #FFBD73;
     text-decoration: none;
 }
+
 .flex-container p a:hover {
     text-decoration: underline;
 }
+
 .login-error {
     width: 100%;
     padding: 12px;

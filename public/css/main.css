@@ -29,21 +29,63 @@ main {
 }
 
 .tasks-layout {
-  display: flex;
-  min-height: 50vh;
-  background-color: #f9f9f9;
+    display: flex;
+    min-height: 50vh;
+    background-color: #f9f9f9;
 }
 
 .tasks-sidebar {
-  width: 220px;
-  background-color: #2c3e50;
-  color: #fff;
-  padding: 20px;
-  font-weight: bold;
+    width: 25%;
+    min-width: 150px;
+    background-color: #2c3e50;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 
 .tasks-list {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.tasks-sidebar li {
+    list-style: none;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 5px 0 0 5px;
+}
+
+.tasks-sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.selected-category {
+    background-color: #fff;
+}
+
+.selected-category a {
+    color: #333333;
+}
+
+button.add-task {
+    width: 100%;
+    padding: 12px;
+    background: #FFBD73;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+button.add-task:hover {
+    background: #dba362;
 }

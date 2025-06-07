@@ -66,12 +66,13 @@ class Login {
                 exit();
             }
 
-        } else {
-            setcookie('error', 'Correo o contraseña incorrectos.', time() + 3600);
-
-            header( 'Location: ?c=login' );
-            exit();
         }
+        
+        setcookie('error', 'Correo o contraseña incorrectos.', time() + 3600);
+
+        header( 'Location: ?c=login' );
+        exit();
+        
     }
 
     public function logOut() {
