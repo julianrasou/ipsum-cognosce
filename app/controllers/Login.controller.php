@@ -19,7 +19,7 @@ class Login {
         $db = Database::connect();
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $username = $_POST['username'];
 
         $stm = $db->prepare('SELECT email FROM users where email = ?');
@@ -33,11 +33,11 @@ class Login {
             header( 'Location: ?c=login' );
             exit();
         } else {
-            $stm = $db->prepare('INSERT INTO users (name, email, password, username) VALUES (?, ?, ?, ?)');
+            $stm = $db->prepare('INSERT INTO users (name, username, email, password_hash ) VALUES (?, ?, ?, ?)');
             $stm->bindParam(1, $name);
-            $stm->bindParam(2, $email);
-            $stm->bindParam(3, $password);
-            $stm->bindParam(4, $username);
+            $stm->bindParam(2, $username);
+            $stm->bindParam(3, $email);
+            $stm->bindParam(4, $password_hash);
             $stm->execute();
             
             header( 'Location: ?c=login' );
@@ -57,10 +57,10 @@ class Login {
 
         if ( $user ) {
 
-            if( password_verify( $password, $user[ 'password' ] ) ) {
+            if( password_verify( $password, $user[ 'password_hash' ] ) ) {
                 $_SESSION[ 'username' ] = $user[ 'username' ];
                 $_SESSION[ 'email' ] = $user[ 'email' ];
-                $_SESSION[ 'user-id' ] = $user[ 'id' ];
+                $_SESSION[ 'user_id' ] = $user[ 'id' ];
 
                 header( 'Location: ?c=home' ); 
                 exit();
