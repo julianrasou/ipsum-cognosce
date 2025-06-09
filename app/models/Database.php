@@ -16,7 +16,7 @@ class Database {
         if( self::$instance === null ) {
 
             try {
-                $db = new PDO( "mysql:host=localhost;dbname=ipsum-cognosce" , 'ipsum-user' , '1234' );
+                $db = new PDO( "mysql:host=localhost;dbname=ipsum_cognosce" , 'ipsum_user' , '1234' );
                 self::$instance = $db;
             } catch (PDOException $e) {
                 print $e->getMessage();
