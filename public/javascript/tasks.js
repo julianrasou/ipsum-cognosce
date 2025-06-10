@@ -183,12 +183,38 @@ function showAddTask() {
 function addTask() {
     let title = document.querySelector("#taskTitle").value;
     let description = document.querySelector("#taskDescription").value;
+    let taskCategory;
+    for( let i = 0; i < categories.length ; i++ ){
+        if( selectedCategory === categories[i]["name"] ) {
+            taskCategory = categories[i]["id"];
+            break;
+        }
+    }
 
     if(title.trim() === "") {
         alert("El título es obligatorio.");
     }else {
-        
+        fetch("app/api/addTask.php", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                category: taskCategory
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("addTaskDialog").close();
+                loadPage();
+            } else {
+                alert(data.error || "Unknown error");
+            }
+        });
     }
-
 
 }
