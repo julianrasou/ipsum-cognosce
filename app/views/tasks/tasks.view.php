@@ -16,26 +16,23 @@
             </div>
         </section>
     </div>
-    <dialog id="taskDetailsDialog">
-        <h3 id="dialogTitle"></h3>
-        <p id="dialogDescription"></p>
-        <p>
-            <strong>Categoría:</strong> <span id="dialogCategory"></span>
-        </p>
-        <p>
-            <strong>Estado:</strong> <span id="dialogStatus"></span>
-        </p>
-        <p>
-            <strong>Fecha:</strong> <span id="dialogDate"></span>
-        </p>
+    <dialog id="taskDetailsDialog" class="dialog details">
+        <h2 id="dialogTitle"></h2>
+        <textarea id="dialogDescription" disabled></textarea>
+        <h3>Categoría:</h3>
+        <p><span id="dialogCategory"></span></p>
+        <h3>Estado:</h3>
+        <p><span id="dialogStatus"></span></p>
+        <h3>Fecha de creación:</h3>
+        <p><span id="dialogDate"></span></p>
         <button id="closeDialogBtn">Cerrar</button>
     </dialog>
-    <dialog id="addTaskDialog">
-        <h3 id="dialogTitle">Añadir tarea:</h3>
-        <p>Título:</p>
-        <input type="text" id="taskTitle">
-        <p>Descripción:</p>
-        <textarea id="taskDescription"></textarea><br>
+    <dialog id="addTaskDialog" class="dialog">
+        <h2>Añadir tarea:</h2>
+        <h3>Título:</h3>
+        <input type="text" id="taskTitle" placeholder="Título de la tarea">
+        <h3>Descripción:</h3>
+        <textarea id="taskDescription" placeholder="Descripción de la tarea"></textarea><br>
         <button id="addTaskDialogButton">Añadir</button>
         <button id="closeTaskDialogBtn">Cancelar</button>
     </dialog>

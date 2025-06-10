@@ -9,7 +9,10 @@
                     echo '<div class="login-error">' . $error . '</div>';
                 }
                 ?>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email"
+                    value="<?php isset($_COOKIE["lastUsedEmail"]) ? print $_COOKIE["lastUsedEmail"] : "" ?>"
+                    required
+                >
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit" name="login">Login</button>
                 <p>No tienes una cuenta? <a href="#" onclick="showForm('register-form')">Registrarse</a></p>

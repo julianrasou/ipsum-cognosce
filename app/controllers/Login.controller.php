@@ -39,7 +39,7 @@ class Login {
             $stm->bindParam(3, $email);
             $stm->bindParam(4, $password_hash);
             $stm->execute();
-            
+            setcookie("lastUsedEmail", $email, time() + (3600 * 24 * 30));
             header( 'Location: ?c=login' );
             exit();
         }
@@ -61,7 +61,8 @@ class Login {
                 $_SESSION[ 'username' ] = $user[ 'username' ];
                 $_SESSION[ 'email' ] = $user[ 'email' ];
                 $_SESSION[ 'user_id' ] = $user[ 'id' ];
-
+                setcookie("lastUsedEmail", $email, time() + (3600 * 24 * 30));
+                
                 header( 'Location: ?c=home' ); 
                 exit();
             }
