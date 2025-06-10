@@ -99,16 +99,63 @@ function updateTasksView() {
         let singleTaskDiv = document.createElement("div");
         let taskCheckbox = document.createElement("input");
         taskCheckbox.setAttribute("type", "checkbox");
+        if( task["status"] == true) {
+            taskCheckbox.checked = true;
+        }
+        taskCheckbox.addEventListener("change", () => {toggleCompleted(task)});
         singleTaskDiv.appendChild(taskCheckbox);
         let taskSpan = document.createElement("span");
         taskSpan.appendChild( document.createTextNode(task["title"]) );
         taskSpan.addEventListener("click", () => { showTaskDetails(task, taskCategory) })
         singleTaskDiv.appendChild( taskSpan );
-        if( task["status"] === true) {
-            taskCheckbox.checked = true;
-        }
+        
         tasksDiv.appendChild(singleTaskDiv);
     });
+}
+
+function toggleCompleted(task) {
+    let status = task["status"];
+    if(status) {
+        fetch("app/api/toggleCompleted.php", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: task["id"],
+                newStatus: 0
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadPage();
+            } else {
+                alert(data.error || "Unknown error");
+            }
+        });
+    }else {
+        fetch("app/api/toggleCompleted.php", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: task["id"],
+                newStatus: 1
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadPage();
+            } else {
+                alert(data.error || "Unknown error");
+            }
+        });
+    }
 }
 
 function showTaskDetails(task, taskCategory) {
