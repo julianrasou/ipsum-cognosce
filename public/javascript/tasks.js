@@ -1,6 +1,6 @@
 let categories = [];
 let tasks = [];
-let selectedCategory = "Trabajo";
+let selectedCategory = "Sin categoría";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadPage();
@@ -57,6 +57,15 @@ function updateCategoriesView() {
     categoriesDiv.innerHTML = ""; 
 
     let categoryUl = document.createElement("ul");
+    let noCategoryLi = document.createElement("li");
+    noCategoryLi.appendChild( document.createTextNode( "Sin categoría" ) );
+    noCategoryLi.addEventListener("click", () => { updateSelectedCategory( "Sin categoría" ) });
+    if( "Sin categoría" === selectedCategory ) {
+        noCategoryLi.classList.add("selected-category");
+    }else {
+        noCategoryLi.classList.add("unselected-category");
+    }
+    categoryUl.appendChild(noCategoryLi);
     categories.forEach(category => {
         let categoryLi = document.createElement("li");
         categoryLi.appendChild( document.createTextNode( category["name"] ) );
@@ -89,7 +98,9 @@ function updateTasksView() {
                 break;
             }
         }
-        if(taskCategory === selectedCategory){
+        if( selectedCategory === "Sin categoría" && task["category_id"] == null) {
+            filteredTasks.push(task);
+        } else if(taskCategory === selectedCategory){
             filteredTasks.push(task);
         }
         
@@ -101,6 +112,7 @@ function updateTasksView() {
         taskCheckbox.setAttribute("type", "checkbox");
         if( task["status"] == true) {
             taskCheckbox.checked = true;
+            singleTaskDiv.classList.add("completed");
         }
         taskCheckbox.addEventListener("change", () => {toggleCompleted(task)});
         singleTaskDiv.appendChild(taskCheckbox);
@@ -108,7 +120,11 @@ function updateTasksView() {
         taskSpan.appendChild( document.createTextNode(task["title"]) );
         taskSpan.addEventListener("click", () => { showTaskDetails(task, taskCategory) })
         singleTaskDiv.appendChild( taskSpan );
-        
+        let removeButton = document.createElement("button");
+        removeButton.textContent = "x";
+        removeButton.classList.add("removeButton");
+        removeButton.addEventListener( "click", () => { removeTask( task["id"] ) } );
+        singleTaskDiv.appendChild(removeButton);
         tasksDiv.appendChild(singleTaskDiv);
     });
 }
@@ -198,6 +214,10 @@ function addCategory() {
 }
 
 function removeCategory() {
+    if(selectedCategory === "Sin categoría") {
+        alert("Seleccione una categoría");
+        return;
+    }
     let confirmar = confirm("Desea eliminar la categoría " + selectedCategory + " y todas las tareas que contiene?");
     if (confirmar) {
         fetch("app/api/removeCategory.php", {
@@ -213,13 +233,14 @@ function removeCategory() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                selectedCategory = "Sin categoría";
                 loadPage();
             } else {
                 alert(data.error || "Unknown error");
             }
-        });
+        }); 
     }
-    
+
 }
 
 function showAddTask() {
@@ -229,8 +250,10 @@ function showAddTask() {
 
 function addTask() {
     let title = document.querySelector("#taskTitle").value;
+    document.querySelector("#taskTitle").value = "";
     let description = document.querySelector("#taskDescription").value;
-    let taskCategory;
+    document.querySelector("#taskDescription").value = "";
+    let taskCategory = 0;
     for( let i = 0; i < categories.length ; i++ ){
         if( selectedCategory === categories[i]["name"] ) {
             taskCategory = categories[i]["id"];
@@ -264,4 +287,30 @@ function addTask() {
         });
     }
 
+}
+
+function removeTask( taskId ) {
+    let confirmar = confirm("¿Desea eliminar la tarea definitivamente?");
+
+    if(!confirmar) {
+        return;
+    }
+    fetch("app/api/removeTask.php", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            taskId: taskId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadPage();
+        } else {
+            alert(data.error || "Unknown error");
+        }
+    });
 }

@@ -35,7 +35,7 @@ CREATE TABLE tasks (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     status BOOLEAN NOT NULL DEFAULT FALSE, -- FALSE = pending, TRUE = completed
-    category_id INT NOT NULL,
+    category_id INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,

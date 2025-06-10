@@ -20,13 +20,22 @@ if (!isset($input['title']) || trim($input['title']) === '') {
 
 $title = trim($input['title']);
 $description = trim($input['description']);
-$category = $input['category'];
+$category = null;
+if($input['category'] != 0) {
+    $category = $input['category'];
+}
 $userId = $_SESSION['user_id'];
 
 try {
     $db = Database::connect();
-    $stmt = $db->prepare("INSERT INTO tasks (user_id, title, description, category_id) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$userId, $title, $description, $category]);
+    if($category) {
+        $stmt = $db->prepare("INSERT INTO tasks (user_id, title, description, category_id) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$userId, $title, $description, $category]); 
+    } else {
+        $stmt = $db->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
+        $stmt->execute([$userId, $title, $description]);
+    }
+    
 
     echo json_encode([
         'success' => true,
