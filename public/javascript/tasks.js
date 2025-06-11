@@ -260,17 +260,20 @@ function showTaskDetails(task) {
 
 function addCategory() {
     let categoryName = prompt("Indica el nombre de la nueva categoría:");
-
-    apiAccess(
-        "app/api/addCategory.php",
-        {
-            name: categoryName,
-        },
-        "Error: No se pudo realizar la operación.",
-        () => {
-            loadPage();
-        }
-    );
+    if (categoryName.trim() === "") {
+        alert("El nombre es obligatorio.");
+    } else {
+        apiAccess(
+            "app/api/addCategory.php",
+            {
+                name: categoryName,
+            },
+            "Error: No se pudo realizar la operación.",
+            () => {
+                loadPage();
+            }
+        );
+    }
 }
 
 function removeCategory() {

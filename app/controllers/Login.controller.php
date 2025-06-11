@@ -30,9 +30,9 @@ class Login
         $usernameExists = UserDAO::getUser($email, 'username');
 
         if ($emailExists[ 'success' ] && $usernameExists[ 'success' ]) {
-            if (!$emailExists[ 'user' ]) {
+            if ($emailExists[ 'user' ]) {
                 setcookie('error', 'Ya existe una cuenta con ese correo.', time() + 3600);
-            } elseif (!$usernameExists[ 'user' ]) {
+            } elseif ($usernameExists[ 'user' ]) {
                 setcookie('error', 'Ya existe una cuenta con ese nombre de usuario.', time() + 3600);
             } else {
                 $result = UserDAO::createUser($name, $username, $email, $password_hash);
