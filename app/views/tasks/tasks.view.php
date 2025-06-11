@@ -5,8 +5,10 @@
             <div id="categories">
 
             </div>
-            <button id="addCategory">+</button>
-            <button id="removeCategory">-</button>
+            <div class="sidebarButtons">
+                <button id="addCategory">+</button>
+                <button id="removeCategory">-</button>
+            </div>
         </section>
 
         <section class="tasks-list">

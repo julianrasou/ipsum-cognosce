@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addTaskDialogButton").addEventListener("click", addTask);
     document.getElementById("closeTaskDialogBtn").addEventListener("click", () => {
         document.getElementById("addTaskDialog").close();
+        document.querySelector("#taskTitle").value = "";
+        document.querySelector("#taskDescription").value = "";
     });
 })
 
@@ -87,11 +89,13 @@ function updateSelectedCategory( category ) {
 
 function updateTasksView() {
     let filteredTasks = [];
+    let filteredTasksCompleted = [];
     let tasksDiv = document.querySelector("#tasks");
     tasksDiv.innerHTML = "";
-    let taskCategory;
+    
 
     tasks.forEach(task => {
+        let taskCategory;
         for( let i = 0; i < categories.length ; i++ ){
             if( task["category_id"] === categories[i]["id"] ) {
                 taskCategory = categories[i]["name"];
@@ -101,7 +105,11 @@ function updateTasksView() {
         if( selectedCategory === "Sin categoría" && task["category_id"] == null) {
             filteredTasks.push(task);
         } else if(taskCategory === selectedCategory){
-            filteredTasks.push(task);
+            if( task["status"] == true ) {
+                filteredTasksCompleted.push(task);
+            } else {
+                filteredTasks.push(task);
+            }
         }
         
     });
@@ -118,7 +126,7 @@ function updateTasksView() {
         singleTaskDiv.appendChild(taskCheckbox);
         let taskSpan = document.createElement("span");
         taskSpan.appendChild( document.createTextNode(task["title"]) );
-        taskSpan.addEventListener("click", () => { showTaskDetails(task, taskCategory) })
+        taskSpan.addEventListener("click", () => { showTaskDetails(task) })
         singleTaskDiv.appendChild( taskSpan );
         let removeButton = document.createElement("button");
         removeButton.textContent = "x";
@@ -127,6 +135,35 @@ function updateTasksView() {
         singleTaskDiv.appendChild(removeButton);
         tasksDiv.appendChild(singleTaskDiv);
     });
+
+    if( filteredTasksCompleted.length != 0) {
+        let completedTittle = document.createElement("h2");
+        completedTittle.appendChild( document.createTextNode( "Completadas:" ) );
+        completedTittle.classList.add("completedTitle");
+        tasksDiv.appendChild(completedTittle);
+
+        filteredTasksCompleted.forEach(task => {
+            let singleTaskDiv = document.createElement("div");
+            let taskCheckbox = document.createElement("input");
+            taskCheckbox.setAttribute("type", "checkbox");
+            if( task["status"] == true) {
+                taskCheckbox.checked = true;
+                singleTaskDiv.classList.add("completed");
+            }
+            taskCheckbox.addEventListener("change", () => {toggleCompleted(task)});
+            singleTaskDiv.appendChild(taskCheckbox);
+            let taskSpan = document.createElement("span");
+            taskSpan.appendChild( document.createTextNode(task["title"]) );
+            taskSpan.addEventListener("click", () => { showTaskDetails(task) })
+            singleTaskDiv.appendChild( taskSpan );
+            let removeButton = document.createElement("button");
+            removeButton.textContent = "x";
+            removeButton.classList.add("removeButton");
+            removeButton.addEventListener( "click", () => { removeTask( task["id"] ) } );
+            singleTaskDiv.appendChild(removeButton);
+            tasksDiv.appendChild(singleTaskDiv);
+        });
+    }
 }
 
 function toggleCompleted(task) {
@@ -174,14 +211,14 @@ function toggleCompleted(task) {
     }
 }
 
-function showTaskDetails(task, taskCategory) {
+function showTaskDetails(task) {
     let dialog = document.getElementById("taskDetailsDialog");
 
     document.getElementById("dialogTitle").textContent = task["title"];
 
     document.getElementById("dialogDescription").textContent = task["description"] || "No description";
 
-    document.getElementById("dialogCategory").textContent = taskCategory;
+    document.getElementById("dialogCategory").textContent = selectedCategory;
 
     document.getElementById("dialogStatus").textContent = task["status"] ? "Completada" : "Pendiente";
 
