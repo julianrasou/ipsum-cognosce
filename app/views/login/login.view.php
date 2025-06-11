@@ -5,7 +5,7 @@
             <form action="?c=login&a=loginUser" method="post">
                 <h2>Iniciar sesión</h2>
                 <?php
-                if( $error !== '' ) {
+                if ($error !== '') {
                     echo '<div class="login-error">' . $error . '</div>';
                 }
                 ?>
@@ -23,7 +23,7 @@
             <form action="?c=login&a=saveUser" method="post">
                 <h2>Registrarse</h2>
                 <?php
-                if( $error !== '' ) {
+                if ($error !== '') {
                     echo '<div class="login-error">' . $error . '</div>';
                 }
                 ?>

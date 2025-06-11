@@ -1,0 +1,4 @@
+{
+    "phpSniffer.run": "onSave",
+    "phpSniffer.standard": "PSR12"
+}

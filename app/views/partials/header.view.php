@@ -31,14 +31,14 @@
             </ul>
         </nav>
         <?php
-        if( isset( $_SESSION[ 'username' ] ) ) {
-        ?>
+        if (isset($_SESSION[ 'username' ])) {
+            ?>
         <a class="login-button" href="?c=login&a=logOut"><Button>Log Out</Button></a>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
         <a class="login-button" href="?c=login"><Button>Log In</Button></a>
-        <?php
+            <?php
         }
         ?>
     </header>
