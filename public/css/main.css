@@ -31,12 +31,12 @@ main {
     margin-top: 30px;
 }
 
-.tasks-layout {
+.layout {
     display: flex;
     min-height: 50vh;
 }
 
-.tasks-sidebar {
+.sidebar {
     width: 25%;
     min-width: 200px;
     background-color: #717888;
@@ -58,12 +58,12 @@ main {
     border: none;
 }
 
-.tasks-sidebar h2 {
+.sidebar h2 {
     margin-bottom: 5px;
     color: white;
 }
 
-.tasks-list {
+.list {
     border-radius: 5px;
     background-color: #f9f9f985;
     margin-left: 5px; 
@@ -71,7 +71,7 @@ main {
     padding: 20px;
 }
 
-.tasks-sidebar li {
+.sidebar li {
     list-style: none;
     padding: 5px;
     margin-bottom: 5px;
@@ -93,7 +93,7 @@ main {
     color: white;
 }
 
-button.add-task {
+button.add {
     width: 100%;
     padding: 12px;
     background: #FFBD73;
@@ -107,18 +107,20 @@ button.add-task {
     transition: 0.5s;
 }
 
-button.add-task:hover {
+button.add:hover {
     background: #dba362;
 }
 
-#tasks div {
+#tasks div,
+#notes div {
 	border: 1px solid black;
 	border-radius: 5px;
 	padding: 10px;
 	margin-bottom: 5px;
 }
 
-#tasks div:hover {
+#tasks div:hover,
+#notes div:hover {
     background-color: #FFBD7330;
     transition: 0.5s;
 }
@@ -161,7 +163,9 @@ button.add-task:hover {
 }
 
 .dialog.details button {
-    float: right
+    float: right;
+    margin-left: 15px;
+    cursor: pointer;
 }
 
 .dialog input {
@@ -185,6 +189,10 @@ button.add-task:hover {
     border-radius: 5px;
     padding: 10px 15px;
     background-color: #efefef
+}
+
+.dialog textarea.noteDialogTextarea {
+    height: 400px;
 }
 
 .dialog h2 {
@@ -211,4 +219,52 @@ button.add-task:hover {
     content: "#";
     font-weight: 900;
     margin-right: 5px;
+}
+
+.editNoteForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.noteTitleForm {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #efefef;
+    font-size: 24px
+}
+
+.noteContentForm {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #efefef;
+    min-width: 100%;
+    max-width: 100%;
+    resize: none;
+    height: 70vh
+}
+
+.editNoteForm button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFBD73;
+    width: 80%;
+    cursor: pointer;
+}
+
+.editNoteForm button:hover {
+    background: #dba362;
+    transition: 0.5s
 }
