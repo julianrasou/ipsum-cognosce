@@ -1,17 +1,20 @@
--- Create the database
+-- Crea la base de datos
 CREATE DATABASE ipsum_cognosce;
 
--- Create a new user (replace 'username' and 'password')
+-- Crea un usuario que será el que use la base de datos del proyecto
+-- No se usa el usuario root por motivos de seguridad
 CREATE USER 'ipsum_user'@'localhost' IDENTIFIED BY '1234';
 
--- Grant all privileges on the database to the user
+-- Le da todos los privilegios sobre la base de datos
 GRANT ALL PRIVILEGES ON ipsum_cognosce.* TO 'ipsum_user'@'localhost';
 
--- Apply the changes
+-- Aplica los cambios
 FLUSH PRIVILEGES;
 
+-- Usa la base de datos
 USE ipsum_cognosce;
 
+-- Crea la tabla usuarios
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -21,6 +24,7 @@ CREATE TABLE users (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Crea la tabla categorías de tareas
 CREATE TABLE task_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -29,12 +33,13 @@ CREATE TABLE task_categories (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- crea la tabla tareas
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    status BOOLEAN NOT NULL DEFAULT FALSE, -- FALSE = pending, TRUE = completed
+    status BOOLEAN NOT NULL DEFAULT FALSE,
     category_id INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

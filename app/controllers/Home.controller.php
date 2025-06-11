@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controlador para la página principal
+ * Una única función que carga la vista principal
+ */
+
 class Home
 {
     public function index()

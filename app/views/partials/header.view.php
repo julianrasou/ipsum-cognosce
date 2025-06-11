@@ -21,6 +21,10 @@
 </head>
 <body>
 
+    <!--
+    Header de la aplicación web
+    Contiene logo, área de navegación y botón de inicio de sesión
+    -->
     <header class="page-header" >
         <img src="public/images/image.jpg" alt="" class="header-logo">
         <nav>
@@ -31,6 +35,8 @@
             </ul>
         </nav>
         <?php
+        // Si la sesión está iniciada muestra un botón de cerrar sesión con la acción logOut
+        // si no, se muestra un botón de login que mueve al usuario a la página de inicio de sesión
         if (isset($_SESSION[ 'username' ])) {
             ?>
         <a class="login-button" href="?c=login&a=logOut"><Button>Log Out</Button></a>

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Controlador para la página de notas
+ * Requiere las vistas correspondientes
+ * Si no se ha iniciado sesión se carga una vista de contenido restringido
+ */
+
 class Notes
 {
     public function index()

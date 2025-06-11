@@ -1,4 +1,6 @@
 {
+    // Archivo de configuración de vscode, especifica el standatd a utilizar para el php code sniffer
+    // específico para este proyecto
     "phpSniffer.run": "onSave",
     "phpSniffer.standard": "PSR12"
 }

@@ -1,37 +1,62 @@
+// Se inicializa el array que contendrá las categorías que se muestran
 let categories = [];
+// Se inicializa el array que contendrá las tareas que se muestran
 let tasks = [];
+// Se inicializa la categoría seleccionada
 let selectedCategory = "Sin categoría";
 
+// Se añade una escucha de evento a la página de forma que cuanto cargue el DOM se ejecuten las siguientes instrucciones
 document.addEventListener("DOMContentLoaded", () => {
+    // Se carga la página
     loadPage();
+
+    // Se añaden las escuchas de eventos a los diferentes boñtones de la página para
+    // que cumplan sus funciones correspondientes
     document.getElementById("closeDialogBtn").addEventListener("click", () => {
         document.getElementById("taskDetailsDialog").close();
     });
+
     document
         .getElementById("addCategory")
         .addEventListener("click", addCategory);
+
     document
         .getElementById("removeCategory")
         .addEventListener("click", removeCategory);
+
     document.getElementById("addTask").addEventListener("click", showAddTask);
+
     document
         .getElementById("addTaskDialogButton")
         .addEventListener("click", addTask);
+
     document
         .getElementById("closeTaskDialogBtn")
         .addEventListener("click", () => {
             document.getElementById("addTaskDialog").close();
+            // Se vacían los inputs si se le da a cancelar para que no se mantengan
             document.querySelector("#taskTitle").value = "";
             document.querySelector("#taskDescription").value = "";
         });
 });
 
+/**
+ * Función que carga la página
+ * Carga las categorías
+ * Carga las tareas
+ * Actualiza la vista
+ */
 async function loadPage() {
     await loadCategories();
     await loadTasks();
     updateView();
 }
 
+/**
+ * Función loadCategories
+ * Recupera las categorías del usuario activo llamando al API endpint personalizado en php
+ * @returns promise
+ */
 function loadCategories() {
     return fetch("app/api/categories.php", {
         method: "GET",
@@ -43,6 +68,11 @@ function loadCategories() {
         });
 }
 
+/**
+ * Función loadTasks
+ * Recupera las tareas del usuario activo llamando al API endpint personalizado en php
+ * @returns promise
+ */
 function loadTasks() {
     return fetch("app/api/tasks.php", {
         method: "GET",
@@ -54,14 +84,23 @@ function loadTasks() {
         });
 }
 
+/**
+ * Actualiza la vista de las categorías y de las tareas
+ */
 function updateView() {
-    console.log(categories);
-    console.log(tasks);
+    // console.log(categories);
+    // console.log(tasks);
 
     updateCategoriesView();
     updateTasksView();
 }
 
+/**
+ * Actualiza la vista de las categorías
+ * Añade las categorías del usuario en el área de las categorías
+ * Crea los elementos de forma dinámica y añade la clase selected-category a la categoría seleccionada
+ * Añade escuchas de eventos para que al pulsat una categoría se actualice la categoría seleccionada
+ */
 function updateCategoriesView() {
     let categoriesDiv = document.querySelector("#categories");
     categoriesDiv.innerHTML = "";
@@ -94,17 +133,27 @@ function updateCategoriesView() {
     categoriesDiv.appendChild(categoryUl);
 }
 
+/**
+ * Actualiza la categoría seleccionada y actualiza la vista sin acceder de nuevo a la base de datos
+ * @param string category
+ */
 function updateSelectedCategory(category) {
     selectedCategory = category;
     updateView();
 }
 
+/**
+ * Actualiza la vista de las tareas
+ * Filtra las tareas de forma que solo se muestren las de la categoría seleccionada
+ * También separa entre completadas y no completadas
+ */
 function updateTasksView() {
     let filteredTasks = [];
     let filteredTasksCompleted = [];
     let tasksDiv = document.querySelector("#tasks");
     tasksDiv.innerHTML = "";
 
+    // Se filtran las tareas
     tasks.forEach((task) => {
         let taskCategory;
         for (let i = 0; i < categories.length; i++) {
@@ -127,6 +176,7 @@ function updateTasksView() {
         }
     });
 
+    // Se añaden las tareas al área de tareas
     filteredTasks.forEach((task) => {
         let singleTaskDiv = document.createElement("div");
         let taskCheckbox = document.createElement("input");
@@ -155,6 +205,7 @@ function updateTasksView() {
         tasksDiv.appendChild(singleTaskDiv);
     });
 
+    // Si hay tareas completadas se muestran en un subapartado al final de las completadas y con una clase personalizada
     if (filteredTasksCompleted.length != 0) {
         let completedTittle = document.createElement("h2");
         completedTittle.appendChild(document.createTextNode("Completadas:"));
@@ -191,6 +242,16 @@ function updateTasksView() {
     }
 }
 
+/**
+ * Funcción de llamada a las AIs
+ * Se utilizan las APIs en varias situaciones por lo que para evitar repetir código se crea esta función
+ * Se pasan por parámetro los datos necesarios para realizar la llamada
+ *
+ * @param String apiURL URL de la API
+ * @param Array config Parámetros que se comparten con la API
+ * @param String errorMessage Mensaje de error personalizado si algo falla
+ * @param function success Función flecha personalizada que se ejecuta si todo va bien
+ */
 function apiAccess(apiURL, config, errorMessage, success) {
     fetch(apiURL, {
         method: "POST",
@@ -210,6 +271,11 @@ function apiAccess(apiURL, config, errorMessage, success) {
         });
 }
 
+/**
+ * Función que cambia el estado de la tarea seleccionada
+ * Llama a la API correspondiente
+ * @param Array task
+ */
 function toggleCompleted(task) {
     let status = task["status"];
     if (status) {
@@ -239,6 +305,10 @@ function toggleCompleted(task) {
     }
 }
 
+/**
+ * Muestra un diálogo con las características de la tarea pasada por parámetro
+ * @param Array task
+ */
 function showTaskDetails(task) {
     let dialog = document.getElementById("taskDetailsDialog");
 
@@ -258,6 +328,11 @@ function showTaskDetails(task) {
     dialog.showModal();
 }
 
+
+/**
+ * Añade una categoría a la lista de categorías
+ * Se añade a la base de datos mediante uso de una API personalizada
+ */
 function addCategory() {
     let categoryName = prompt("Indica el nombre de la nueva categoría:");
     if (categoryName.trim() === "") {
@@ -276,6 +351,9 @@ function addCategory() {
     }
 }
 
+/**
+ * Elimina la categoría activa de la base de datos
+ */
 function removeCategory() {
     if (selectedCategory === "Sin categoría") {
         alert("Seleccione una categoría");
@@ -286,6 +364,8 @@ function removeCategory() {
             selectedCategory +
             " y todas las tareas que contiene?"
     );
+
+    // Si no se confirma no elimina la categoría
     if (confirmar) {
         apiAccess(
             "app/api/removeCategory.php",
@@ -301,17 +381,27 @@ function removeCategory() {
     }
 }
 
+/**
+ * Muestra el diálogo para añadir una tarea
+ */
 function showAddTask() {
     let dialog = document.getElementById("addTaskDialog");
     dialog.showModal();
 }
 
+/**
+ * Añade una categoría a la base de datos según los datos de los campos rellenos
+ */
 function addTask() {
     let title = document.querySelector("#taskTitle").value;
     document.querySelector("#taskTitle").value = "";
+
     let description = document.querySelector("#taskDescription").value;
     document.querySelector("#taskDescription").value = "";
+
     let taskCategory = 0;
+
+    // Recupera el id de la categoría seleccionada
     for (let i = 0; i < categories.length; i++) {
         if (selectedCategory === categories[i]["name"]) {
             taskCategory = categories[i]["id"];
@@ -319,6 +409,7 @@ function addTask() {
         }
     }
 
+    // Si el título no es válido no continúa, si lo es añade la tarea mediante el uso de una API personalizada
     if (title.trim() === "") {
         alert("El título es obligatorio.");
     } else {
@@ -338,9 +429,15 @@ function addTask() {
     }
 }
 
+
+/**
+ * Elimina la tarea seleccionada de la base de datos mediante el uso de una API personalizada
+ * @param Integer taskId 
+ */
 function removeTask(taskId) {
     let confirmar = confirm("¿Desea eliminar la tarea definitivamente?");
 
+    // Si no se confirma no continúa
     if (!confirmar) {
         return;
     }

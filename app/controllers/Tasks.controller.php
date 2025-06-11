@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Controlador para la página de tareas
+ * Requiere las vistas correspondientes
+ * Si no se ha iniciado sesión se carga una vista de contenido restringido
+ */
+
 class Tasks
 {
     public function index()

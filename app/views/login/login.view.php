@@ -1,3 +1,9 @@
+<!--
+    Vista principal de la página de login
+    Contiene los formularios de login y de register
+    Uno está oculto mientras se muestra el otro
+-->
+
 <main>
     <div class="flex-container">
         
@@ -6,13 +12,14 @@
                 <h2>Iniciar sesión</h2>
                 <div id="errors">
                     <?php
+                    // Si existen errores del inicio de sesión se muestran dentro de este div
                     if ($error !== '') {
                         echo '<div class="login-error">' . $error . '</div>';
                     }
                     ?>
                 </div>
                 <div class="inputDiv">
-                    <input type="text" name="email" placeholder="Nombre de usuario o email"
+                    <input type="text" name="email" placeholder="Nombre de usuario o E-Mail"
                         value="<?php isset($_COOKIE["lastUsedEmail"]) ? print $_COOKIE["lastUsedEmail"] : "" ?>"
                         id="loginEmail"
                     >
@@ -44,7 +51,7 @@
                     <span id="registerUsername-error" class="input-error"></span>
                 </div>
                 <div class="inputDiv">
-                    <input type="email" name="email" placeholder="Email" id="registerEmail">
+                    <input type="email" name="email" placeholder="E-Mail" id="registerEmail">
                     <span id="registerEmail-error" class="input-error"></span>
                 </div>
                 <div class="inputDiv">
