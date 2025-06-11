@@ -7,7 +7,7 @@ class Login {
         $error = '';
         if( isset( $_COOKIE[ 'error' ] ) ) {
             $error = $_COOKIE[ 'error' ] ;
-            setcookie( 'error', '', time() + 3600 );
+            setcookie( 'error', '', time() - 3600 );
         }
 
         require_once 'app/views/partials/header.view.php';
@@ -16,60 +16,79 @@ class Login {
     }
 
     public function saveUser() {
-        $db = Database::connect();
+
+        require_once 'app/models/UserDAO.php';
+
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $username = $_POST['username'];
 
-        $stm = $db->prepare('SELECT email FROM users where email = ?');
-        $stm->bindParam(1, $email);
-        $stm->execute();
-        $user = $stm->fetch(PDO::FETCH_ASSOC);
+        $emailExists = UserDAO::getUser( $email, 'email' );
+        $usernameExists = UserDAO::getUser( $email, 'username' );
 
-        if ( $user ) {
-            setcookie('error', 'Ya existe una cuenta con ese correo.', time() + 3600);
+        if ( $emailExists[ 'success' ] && $usernameExists[ 'success' ] ){
+            if ( !$emailExists[ 'user' ] ) {
+                setcookie('error', 'Ya existe una cuenta con ese correo.', time() + 3600);
+            } else if ( !$usernameExists[ 'user' ] ) {
+                setcookie('error', 'Ya existe una cuenta con ese nombre de usuario.', time() + 3600);
+            } else {
 
-            header( 'Location: ?c=login' );
-            exit();
+                $result = UserDAO::createUser( $name, $username, $email, $password_hash );
+
+                if ( $result[ 'success' ] ) {
+                    setcookie( "lastUsedEmail", $result[ 'user' ][ 'email' ], time() + (3600 * 24 * 30));
+                } else {
+                    setcookie( 'error', 'No se pudo crear el usuario.', time() + 3600 );
+                }
+            }
         } else {
-            $stm = $db->prepare('INSERT INTO users (name, username, email, password_hash ) VALUES (?, ?, ?, ?)');
-            $stm->bindParam(1, $name);
-            $stm->bindParam(2, $username);
-            $stm->bindParam(3, $email);
-            $stm->bindParam(4, $password_hash);
-            $stm->execute();
-            setcookie("lastUsedEmail", $email, time() + (3600 * 24 * 30));
-            header( 'Location: ?c=login' );
-            exit();
+            setcookie( 'error', 'No se pudo crear el usuario.', time() + 3600 );
         }
+
+        header( 'Location: ?c=login' );
+        exit();
     }
 
     public function loginUser() {
+        require_once 'app/models/UserDAO.php';
+
         $db = Database::connect();
-        $email = $_POST['email'];
+        $email_username = $_POST['email'];
         $password = $_POST[ 'password' ];
-        
-        $stm = $db->prepare('SELECT * FROM users where email = ?');
-        $stm->bindParam(1, $email);
-        $stm->execute();
-        $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-        if ( $user ) {
+        $emailExists = UserDAO::getUser( $email_username, 'email' );
+        $usernameExists = UserDAO::getUser( $email_username, 'username' );
 
-            if( password_verify( $password, $user[ 'password_hash' ] ) ) {
-                $_SESSION[ 'username' ] = $user[ 'username' ];
-                $_SESSION[ 'email' ] = $user[ 'email' ];
-                $_SESSION[ 'user_id' ] = $user[ 'id' ];
-                setcookie("lastUsedEmail", $email, time() + (3600 * 24 * 30));
-                
-                header( 'Location: ?c=home' ); 
-                exit();
+        if ( $emailExists[ 'success' ] && $usernameExists[ 'success' ] ) {
+
+            if ( $emailExists[ 'user' ] ) {
+                if( password_verify( $password, $emailExists[ 'user' ][ 'password_hash' ] ) ) {
+                    $_SESSION[ 'username' ] = $emailExists[ 'user' ][ 'username' ];
+                    $_SESSION[ 'email' ] = $emailExists[ 'user' ][ 'email' ];
+                    $_SESSION[ 'user_id' ] = $emailExists[ 'user' ][ 'id' ];
+
+                    setcookie("lastUsedEmail", $email_username, time() + (3600 * 24 * 30));
+                    header( 'Location: ?c=home' );
+                    exit();
+                }
+            } else if ( $usernameExists[ 'user' ] ) {
+                if( password_verify( $password, $usernameExists[ 'user' ][ 'password_hash' ] ) ) {
+                    $_SESSION[ 'username' ] = $usernameExists[ 'user' ][ 'username' ];
+                    $_SESSION[ 'email' ] = $usernameExists[ 'user' ][ 'email' ];
+                    $_SESSION[ 'user_id' ] = $usernameExists[ 'user' ][ 'id' ];
+
+                    setcookie("lastUsedEmail", $email_username, time() + (3600 * 24 * 30));
+                    header( 'Location: ?c=home' );
+                    exit();
+                }
+            } else {
+                setcookie('error', 'Correo o contraseña incorrectos.', time() + 3600);
             }
 
+        } else {
+            setcookie('error', 'No se pudo iniciar sesión.', time() + 3600);
         }
-        
-        setcookie('error', 'Correo o contraseña incorrectos.', time() + 3600);
 
         header( 'Location: ?c=login' );
         exit();
