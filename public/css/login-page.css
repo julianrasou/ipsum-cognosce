@@ -35,6 +35,9 @@
     border: none;
     outline: none;
     font-size: 18px;
+}
+
+.inputDiv {
     margin-bottom: 20px;
 }
 
@@ -83,4 +86,9 @@
     background: #ff9f9f;
     font-weight: 700;
     color: white;
+}
+
+.input-error {
+    color: red;
+    font-size: 14px;
 }

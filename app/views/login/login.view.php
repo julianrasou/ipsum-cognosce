@@ -4,17 +4,25 @@
         <div class="form-box active" id="login-form">
             <form action="?c=login&a=loginUser" method="post">
                 <h2>Iniciar sesión</h2>
-                <?php
-                if ($error !== '') {
-                    echo '<div class="login-error">' . $error . '</div>';
-                }
-                ?>
-                <input type="text" name="email" placeholder="Nombre de usuario o email"
-                    value="<?php isset($_COOKIE["lastUsedEmail"]) ? print $_COOKIE["lastUsedEmail"] : "" ?>"
-                    required
-                >
-                <input type="password" name="password" placeholder="Contraseña" required>
-                <button type="submit" name="login">Login</button>
+                <div id="errors">
+                    <?php
+                    if ($error !== '') {
+                        echo '<div class="login-error">' . $error . '</div>';
+                    }
+                    ?>
+                </div>
+                <div class="inputDiv">
+                    <input type="text" name="email" placeholder="Nombre de usuario o email"
+                        value="<?php isset($_COOKIE["lastUsedEmail"]) ? print $_COOKIE["lastUsedEmail"] : "" ?>"
+                        id="loginEmail"
+                    >
+                    <span class="input-error" id="loginEmail-error"></span>
+                </div>
+                <div class="inputDiv">
+                    <input type="password" name="password" placeholder="Contraseña" id="loginPassword">
+                    <span class="input-error" id="loginPassword-error"></span>
+                </div>
+                <button type="submit" name="login" id="loginButton">Login</button>
                 <p>No tienes una cuenta? <a href="#" onclick="showForm('register-form')">Registrarse</a></p>
             </form>
         </div>
@@ -27,11 +35,23 @@
                     echo '<div class="login-error">' . $error . '</div>';
                 }
                 ?>
-                <input type="text" name="name" placeholder="Nombre" required>
-                <input type="text" name="username" placeholder="Nombre de usuario" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Contraseña" required>
-                <button type="submit" name="register">Register</button>
+                <div class="inputDiv">
+                    <input type="text" name="name" placeholder="Nombre" id="registerName">
+                    <span id="registerName-error" class="input-error"></span>
+                </div>
+                <div class="inputDiv">
+                    <input type="text" name="username" placeholder="Nombre de usuario" id="registerUsername">
+                    <span id="registerUsername-error" class="input-error"></span>
+                </div>
+                <div class="inputDiv">
+                    <input type="email" name="email" placeholder="Email" id="registerEmail">
+                    <span id="registerEmail-error" class="input-error"></span>
+                </div>
+                <div class="inputDiv">
+                    <input type="password" name="password" placeholder="Contraseña" id="registerPassword">
+                    <span id="registerPassword-error" class="input-error"></span>
+                </div>
+                <button type="submit" name="register" id="registerButton">Register</button>
                 <p>Ya tienes una cuenta? <a href="#" onclick="showForm('login-form')">Iniciar sesión</a></p>
             </form>
         </div>
