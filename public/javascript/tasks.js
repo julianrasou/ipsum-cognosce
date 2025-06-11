@@ -58,7 +58,7 @@ async function loadPage() {
  * @returns promise
  */
 function loadCategories() {
-    return fetch("app/api/categories.php", {
+    return fetch("app/api/tasks/categories.php", {
         method: "GET",
         credentials: "include",
     })
@@ -74,7 +74,7 @@ function loadCategories() {
  * @returns promise
  */
 function loadTasks() {
-    return fetch("app/api/tasks.php", {
+    return fetch("app/api/tasks/tasks.php", {
         method: "GET",
         credentials: "include",
     })
@@ -280,7 +280,7 @@ function toggleCompleted(task) {
     let status = task["status"];
     if (status) {
         apiAccess(
-            "app/api/toggleCompleted.php",
+            "app/api/tasks/toggleCompleted.php",
             {
                 id: task["id"],
                 newStatus: 0,
@@ -292,7 +292,7 @@ function toggleCompleted(task) {
         );
     } else {
         apiAccess(
-            "app/api/toggleCompleted.php",
+            "app/api/tasks/toggleCompleted.php",
             {
                 id: task["id"],
                 newStatus: 1,
@@ -339,7 +339,7 @@ function addCategory() {
         alert("El nombre es obligatorio.");
     } else {
         apiAccess(
-            "app/api/addCategory.php",
+            "app/api/tasks/addCategory.php",
             {
                 name: categoryName,
             },
@@ -368,7 +368,7 @@ function removeCategory() {
     // Si no se confirma no elimina la categoría
     if (confirmar) {
         apiAccess(
-            "app/api/removeCategory.php",
+            "app/api/tasks/removeCategory.php",
             {
                 name: selectedCategory,
             },
@@ -390,7 +390,7 @@ function showAddTask() {
 }
 
 /**
- * Añade una categoría a la base de datos según los datos de los campos rellenos
+ * Añade una tarea a la base de datos según los datos de los campos rellenos
  */
 function addTask() {
     let title = document.querySelector("#taskTitle").value;
@@ -414,7 +414,7 @@ function addTask() {
         alert("El título es obligatorio.");
     } else {
         apiAccess(
-            "app/api/addTask.php",
+            "app/api/tasks/addTask.php",
             {
                 title: title,
                 description: description,
@@ -443,7 +443,7 @@ function removeTask(taskId) {
     }
 
     apiAccess(
-        "app/api/removeTask.php",
+        "app/api/tasks/removeTask.php",
         {
             taskId: taskId,
         },
