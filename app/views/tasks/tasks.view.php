@@ -1,6 +1,6 @@
 <main>
-    <div class="tasks-layout">
-        <section class="tasks-sidebar">
+    <div class="layout">
+        <section class="sidebar">
             <h2>Categorías</h2>
             <div id="categories">
 
@@ -11,8 +11,8 @@
             </div>
         </section>
 
-        <section class="tasks-list">
-            <button id="addTask" class="add-task">+ Añadir tarea</button><br>
+        <section class="list">
+            <button id="addTask" class="add">+ Añadir tarea</button><br>
             <div id="tasks">
 
             </div>
