@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Requiere la base de datos
-require_once "../models/Database.php";
+require_once "../../models/Database.php";
 
 // Recupera los datos pasados con la llamada a la API
 $input = json_decode(file_get_contents('php://input'), true);

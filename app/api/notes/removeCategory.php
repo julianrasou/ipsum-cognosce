@@ -6,7 +6,7 @@
  * mediante llamadas a APIs que no recargan la página cada vez que se hace una operación
  *
  * Función:
- * Cambia el estado de una categoría
+ * Elimina una categoría de la base de datos especificada por el usuario
  */
 
 // Inicia la sesión dado que no se encuentra en index.php
@@ -23,29 +23,22 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Requiere la base de datos
-require_once "../models/Database.php";
+require_once "../../models/Database.php";
 
 // Recupera los datos pasados con la llamada a la API
 $input = json_decode(file_get_contents('php://input'), true);
 
-// Si no se ha pasado id o el id está vacío, devuelve un error y no continúa con la ejecución
-if (!isset($input['id']) || trim($input['id']) === '') {
-    echo json_encode(['error' => 'Task id is required']);
-    exit;
-}
-
 // Inicializa dos variables para los datos necesarios
-$taskId = trim($input['id']);
-$newStatus = trim($input['newStatus']);
+$name = trim($input['name']);
 $userId = $_SESSION['user_id'];
 
-// Ejecuta la operación de cambiar el estado de la tarea, si todo va bien
+// Ejecuta la operación de eliminación de la categoría, si todo va bien
 // devuelve un mensaje de success
 // si no devuelve un error
 try {
     $db = Database::connect();
-    $stmt = $db->prepare("UPDATE tasks SET status=? WHERE id=? AND user_id=?");
-    $stmt->execute([$newStatus, $taskId, $userId]);
+    $stmt = $db->prepare("DELETE FROM note_categories WHERE user_id=? AND name=?");
+    $stmt->execute([$userId, $name]);
 
     echo json_encode([
         'success' => true

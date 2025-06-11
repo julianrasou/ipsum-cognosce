@@ -6,7 +6,7 @@
  * mediante llamadas a APIs que no recargan la página cada vez que se hace una operación
  *
  * Función:
- * Añade una categoría a la base de datos ligada al usuario creador
+ * Elimina una tarea de la base de datos especificada por el usuario
  */
 
 // Inicia la sesión dado que no se encuentra en index.php
@@ -23,36 +23,25 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Requiere la base de datos
-require_once "../models/Database.php";
+require_once "../../models/Database.php";
 
 // Recupera los datos pasados con la llamada a la API
 $input = json_decode(file_get_contents('php://input'), true);
 
-// Si no se ha pasado nombre o el nombre está vacío, devuelve un error y no continúa con la ejecución
-if (!isset($input['name']) || trim($input['name']) === '') {
-    echo json_encode(['error' => 'Category name is required']);
-    exit;
-}
-
 // Inicializa dos variables para los datos necesarios
-$name = trim($input['name']);
+$id = trim($input['taskId']);
 $userId = $_SESSION['user_id'];
 
-// Ejecuta la operación de inserción la nueva categoría, si todo va bien
-// devuelve un mensaje de success y los datos de la categoría
+// Ejecuta la operación de eliminación de la tarea, si todo va bien
+// devuelve un mensaje de success
 // si no devuelve un error
 try {
     $db = Database::connect();
-    $stmt = $db->prepare("INSERT INTO task_categories (user_id, name) VALUES (?, ?)");
-    $stmt->execute([$userId, $name]);
+    $stmt = $db->prepare("DELETE FROM tasks WHERE user_id=? AND id=?");
+    $stmt->execute([$userId, $id]);
 
     echo json_encode([
-        'success' => true,
-        'category' => [
-            'id' => $db->lastInsertId(),
-            'user_id' => $userId,
-            'name' => $name
-        ]
+        'success' => true
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
