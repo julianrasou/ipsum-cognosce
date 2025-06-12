@@ -1,0 +1,128 @@
+.pomodoro-container {
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.timer {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.pomodoro {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.timer h1 {
+    font-size: 3rem;
+    margin: 20px auto;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pomodoro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25rem;
+    height: 25rem;
+    position: relative;
+    margin: 2.5rem auto;
+    text-align: center;
+    border-radius: 50%;
+    background: #cad1ff;
+    box-shadow: 20px 20px 42px #0e1021, -20px -20px 42px #1c2244;
+}
+
+.pomodoro::before {
+    content: "";
+    position: absolute;
+    border: 10px solid royalblue;
+    border-radius: 50%;
+    width: 22rem;
+    height: 22rem;
+}
+
+.time {
+    font-size: 5rem !important;
+    margin: 20px auto;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pomodoro-button {
+    padding: 12px;
+    background: #FFBD73;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    margin: 5px;
+    transition: 0.5s;
+}
+
+.pomodoro-button.active, .pomodoro-button:hover, #pomodoro-reset:hover {
+    background: #dba362;
+}
+
+.hidden {
+    display: block;
+}
+
+.timer-display {
+    font-size: 5rem;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 12px;
+    background: #FFBD73;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    margin: 5px;
+    transition: 0.5s;
+}
+
+#pomodoro-stop:hover {
+    background-color: tomato;
+}
+
+#pomodoro-start:hover {
+    background-color: #219a52;
+}
+
+#timer-message {
+    color: white;
+    background-color: tomato;
+    display: none;
+    padding: .5rem;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 1rem;
+}

@@ -1,6 +1,8 @@
 @import url("login-page.css");
 @import url("header-partial.css");
 @import url("tasks-notes-pages.css");
+@import url("pomodoro.css");
+
 
 * {
     margin: 0;
