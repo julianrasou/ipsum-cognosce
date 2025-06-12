@@ -30,7 +30,7 @@
         <nav>
             <ul class="nav-links" >
                 <li class="<?php echo $controller === "home" ? "activePage" : "inactivePage" ?>" >
-                    <a href="?c=home">Home</a>
+                    <a href="?c=home">Inicio</a>
                 </li>
                 <li class="<?php echo $controller === "tasks" ? "activePage" : "inactivePage" ?>" >
                     <a href="?c=tasks">Tareas</a>
