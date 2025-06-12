@@ -31,3 +31,21 @@ main {
     margin: auto;
     margin-top: 30px;
 }
+
+.activePage a {
+    background-color: #C4E1F6;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.inactivePage a {
+    background-color: #C4E1F670;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.noteLogo {
+    height: 20px;
+    margin-right: 10px;
+    position: fixed;
+}

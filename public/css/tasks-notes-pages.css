@@ -86,6 +86,10 @@ button.add:hover {
 	margin-bottom: 5px;
 }
 
+#notes div span {
+    margin-left: 30px;
+}
+
 #tasks div:hover,
 #notes div:hover {
     background-color: #FFBD7330;

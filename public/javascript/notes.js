@@ -34,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+/**
+ * Función addNote
+ * Redirige a la página de editar notas
+ */
 function addNote() {
     if(selectedCategory === "Sin categoría") {
         window.location = "/ipsum-cognosce?c=notes&a=edit";
@@ -182,6 +187,10 @@ function updateNotesView() {
     // Se añaden las tareas al área de tareas
     filteredNotes.forEach((note) => {
         let singleNoteDiv = document.createElement("div");
+        let icon = document.createElement("img");
+        icon.setAttribute("src", "public/images/writing.png");
+        icon.setAttribute("class", "noteLogo");
+        singleNoteDiv.appendChild(icon);
         let noteSpan = document.createElement("span");
         noteSpan.appendChild(document.createTextNode(note["title"]));
         noteSpan.addEventListener("click", () => {

@@ -10,6 +10,7 @@ class Tasks
 {
     public function index()
     {
+        $controller = 'tasks';
         if (!isset($_SESSION["user_id"])) {
             require_once 'app/views/partials/header.view.php';
             require_once 'app/views/unverified.view.php';

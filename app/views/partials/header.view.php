@@ -29,9 +29,15 @@
         <img src="public/images/image.jpg" alt="" class="header-logo">
         <nav>
             <ul class="nav-links" >
-                <li><a href="?c=home">Home</a></li>
-                <li><a href="?c=tasks">Tareas</a></li>
-                <li><a href="?c=notes">Notas</a></li>
+                <li class="<?php echo $controller === "home" ? "activePage" : "inactivePage" ?>" >
+                    <a href="?c=home">Home</a>
+                </li>
+                <li class="<?php echo $controller === "tasks" ? "activePage" : "inactivePage" ?>" >
+                    <a href="?c=tasks">Tareas</a>
+                </li>
+                <li class="<?php echo $controller === "notes" ? "activePage" : "inactivePage" ?>" >
+                    <a href="?c=notes">Notas</a>
+                </li>
             </ul>
         </nav>
         <?php

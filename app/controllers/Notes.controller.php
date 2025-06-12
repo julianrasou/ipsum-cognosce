@@ -18,6 +18,8 @@ class Notes
 
     public function index()
     {
+
+        $controller = "notes";
         if (!isset($_SESSION["user_id"])) {
             require_once 'app/views/partials/header.view.php';
             require_once 'app/views/unverified.view.php';
@@ -29,6 +31,10 @@ class Notes
         }
     }
 
+    /**
+     * Función que se ejecuta al editar una nota
+     * Si se quiere crear una nota nueva, es decir no se pasa id, primero se crea y se añade a la BD
+     */
     public function edit()
     {
         $noteId = $_REQUEST["id"] ?? null ;
@@ -43,6 +49,7 @@ class Notes
         }
 
         if ($note["success"]) {
+            $controller = "notes";
             $note = $this->model::getNote($noteId)["note"];
             require_once 'app/views/partials/header.view.php';
             require_once 'app/views/notes/edit.view.php';
@@ -53,6 +60,9 @@ class Notes
         }
     }
 
+    /**
+     * Acción que se encarga de guardar en la base de datos la nota modificada
+     */
     public function save()
     {
         $noteId = $_REQUEST["id"] ? $_REQUEST["id"] : null ;

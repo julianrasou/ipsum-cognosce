@@ -16,6 +16,8 @@ class Login
     public function index()
     {
 
+        $controller = "login";
+
         $error = '';
         if (isset($_COOKIE[ 'error' ])) {
             $error = $_COOKIE[ 'error' ] ;
