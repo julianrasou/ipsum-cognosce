@@ -23,9 +23,9 @@
             </section>
 
             <div class="buttons">
-                <button class="control-button" id="pomodoro-start">Start</button>
-                <button class="control-button" id="pomodoro-reset">Reset</button>
-                <button class="control-button" id="pomodoro-stop">Stop</button>
+                <button class="control-button" id="pomodoro-start">Comenzar</button>
+                <button class="control-button" id="pomodoro-reset">Reiniciar contador</button>
+                <button class="control-button" id="pomodoro-stop">Parar</button>
             </div>
         </div>
     </div>

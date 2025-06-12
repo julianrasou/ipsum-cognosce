@@ -42,7 +42,7 @@
     text-align: center;
     border-radius: 50%;
     background: #cad1ff;
-    box-shadow: 20px 20px 42px #0e1021, -20px -20px 42px #1c2244;
+    box-shadow: 0px 0px 20px #33333360;
 }
 
 .pomodoro::before {

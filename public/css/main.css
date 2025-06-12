@@ -1,5 +1,6 @@
 @import url("login-page.css");
 @import url("header-partial.css");
+@import url("footer-partial.css");
 @import url("tasks-notes-pages.css");
 @import url("pomodoro.css");
 
@@ -49,5 +50,5 @@ main {
 .noteLogo {
     height: 20px;
     margin-right: 10px;
-    position: fixed;
+    position: relative;
 }
